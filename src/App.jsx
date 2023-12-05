@@ -1,20 +1,24 @@
-import React from 'react'
+import React ,{ useState} from 'react'
 import Nabvar from './Components/Nabvar'
 import Header from './Components/Shared/Header'
-import Point from './Components/Shared/point'
+import CarRental from './Components/Shared/CarRental'
 
 
 
 
 function App() {
- 
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (car) => {
+    setCart([...cart, car]);
+  };
 
   return (
     <>
 
-        <Nabvar></Nabvar>
+        <Nabvar cart={cart}/>
         <Header></Header>
-        <Point></Point>
+        <CarRental></CarRental>
       
      
           

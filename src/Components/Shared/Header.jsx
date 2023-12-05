@@ -25,7 +25,7 @@ function Header() {
 
   return (
     <div>
-        <div className='h-screen flex flex-col items-center' style={{ backgroundImage:`url(${PL})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+        <div className='h-screen pt-40 flex flex-col items-center' style={{ backgroundImage:`url(${PL})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
            
            <div className='pt-20 box-content flex flex-col' >
 
