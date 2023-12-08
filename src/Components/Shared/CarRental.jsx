@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import { CarsData } from '../CarsData';
 
 import Seat from '../img/seat.png'
-import Fuel from '../img/Fuel.png'
+import Fuel from '../img/fuel.png'
 
 
 
