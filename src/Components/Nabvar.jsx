@@ -22,14 +22,11 @@ function Nabvar() {
       };
     
 
-    const addToCart = (car) => {
-        setCart([...cart, car]);
-  
-      };
+ 
 
   return (
     <div>
-        <nav className='bg-[#E9B824] p-4 fixed w-full'>
+        <nav className='bg-[#EC8F5E] p-4 fixed w-full'>
             <div className='container mx-auto flex justify-between items-center'> 
 
             <div className='text-white text-lg font-bold'>
@@ -46,6 +43,7 @@ function Nabvar() {
 
                 </button>
 
+             
                 <button onClick={toggleMenu} className="text-white focus:outline-none">
 
                     
@@ -59,7 +57,7 @@ function Nabvar() {
 
 
                 {menuOpen ? (
-  <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#E9B824] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+  <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
 <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
                 
                 <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
@@ -70,7 +68,7 @@ function Nabvar() {
   
   </div>
 ) : (
-  <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#E9B824] items-center flex flex-col p-4'>
+  <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
  <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
                 
                 <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
@@ -79,32 +77,43 @@ function Nabvar() {
   </div>
 )}
 
-   
-{cartOpen && 
+  {/* CARRITO DE COMPRA  */}
 
-  
-          
-    <Carrito/>
+{cartOpen ? (
+  <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+{/* 
+                  {cartOpen && <Carrito cart={cart} toggleCart={toggleCart} />} */}
+
+                  
+     {/* <div className="">
+      <h2 className="text-2xl font-bold mb-4" >Tu Carrito </h2>
+      <ul>
+        {CarRental.map((item) => (
+          <li key={item.id}>
+            {`${item.model} - ${item.fuelType} - $${item.price}`}
+          </li>
+        ))}
+      </ul>
+    </div>  */}
     
-  
- 
-}
 
-          
-
-
-
-
-                {/* {menuOpen && (
-              <div className={`mt-2 absolute  gap-4 right-0 top-[7.5rem] w-60 h-screen bg-[#E9B824] items-center flex flex-col p-4 transition-transform transform ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                
-                <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
+  </div>
+) : (
+  <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
+ <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
                 
                 <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
                 <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
                 <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Acerca de nosotros</a>
-              </div>
-            )} */}
+  </div>
+)}
+
+
+
+          
+
+
+
 
 
      

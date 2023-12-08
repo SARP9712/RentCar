@@ -30,17 +30,17 @@ function Header() {
            <div className='pt-20 box-content flex flex-col' >
 
          
-           <form onSubmit={handleSubmit} className=" border text-white p-6 bg-[#E9B824] flex flex-col gap-2">
+           <form onSubmit={handleSubmit} className=" rounded-xl text-white p-6 bg-[#EC8F5E] flex flex-col gap-2">
           
-           <h1 className='text-[#337b3f] font-oswald uppercase text-center text-2xl '> Reserva Ahora </h1>
+           <h1 className='text-white font-oswald uppercase text-center text-2xl '> Reserva Ahora </h1>
           
-          <label htmlFor="sucursalRecogida" className="mb-2 flex flex-col p-2 text-[#337b3f] font-oswald uppercase">
+          <label htmlFor="sucursalRecogida" className="mb-2 flex flex-col p-2 text-white font-oswald uppercase">
 
 
                 Sucursal de Recogida:           
 
 
-        <select name="" id="sucursalRecogida"  value={sucursalRecogida}  onChange={(e) => setSucursalRecogida(e.target.value)}  className="bg-white text-[#337b3f] font-oswald uppercase p-2 "
+        <select name="" id="sucursalRecogida"  value={sucursalRecogida}  onChange={(e) => setSucursalRecogida(e.target.value)}  className="bg-white text-black font-oswald uppercase p-2 "
         >
             <option value="">Escoge un Sitio </option>
             <option value="EstacionSantaJusta">Estacion Santa Justa </option>
@@ -48,7 +48,7 @@ function Header() {
         </select>
       </label>
 
-      <label htmlFor="diaRecogida" className="mb-2 text-[#337b3f] font-oswald uppercase ">
+      <label htmlFor="diaRecogida" className="mb-2 text-white font-oswald uppercase ">
         Día de Recogida:
         <input
           type="date"
@@ -59,7 +59,7 @@ function Header() {
         />
       </label>
 
-      <label htmlFor="horaRecogida" className="mb-2 flex  text-[#337b3f] font-oswald uppercase">
+      <label htmlFor="horaRecogida" className="mb-2 flex  text-white font-oswald uppercase">
         Hora de Recogida:
         <input
           type="time"
@@ -70,7 +70,7 @@ function Header() {
         />
       </label>
 
-      <label htmlFor="diaDevolucion" className="mb-2 text-[#337b3f] font-oswald uppercase">
+      <label htmlFor="diaDevolucion" className="mb-2 text-white font-oswald uppercase">
         Día de Devolución:
         <input
           type="date"
@@ -81,7 +81,7 @@ function Header() {
         />
       </label>
 
-      <label htmlFor="horaDevolucion" className="mb-2 text-[#337b3f] font-oswald uppercase">
+      <label htmlFor="horaDevolucion" className="mb-2 text-white font-oswald uppercase">
         Hora de Devolución:
         <input
           type="time"
@@ -92,7 +92,7 @@ function Header() {
         />
       </label>
 
-      <label htmlFor="edadConductor" className="mb-2 text-[#337b3f] font-oswald uppercase">
+      <label htmlFor="edadConductor" className="mb-2 text-white font-oswald uppercase">
         Edad del Conductor (25-74 años):
         <input
           type="number"
@@ -105,7 +105,7 @@ function Header() {
         />
       </label>
 
-      <button type="submit" className="bg-[#337b3f] text-white p-2 mt-4 rounded-sm font-oswald uppercase">
+      <button type="submit" className="bg-[#F3B664] text-white p-2 mt-4 rounded-sm font-oswald font-bold uppercase">
         Buscar Coches
       </button>
     </form>

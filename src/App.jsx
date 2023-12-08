@@ -2,6 +2,7 @@ import React ,{ useState} from 'react'
 import Nabvar from './Components/Nabvar'
 import Header from './Components/Shared/Header'
 import CarRental from './Components/Shared/CarRental'
+import CarList from './Components/Shared/Carlist'
 
 
 
@@ -19,6 +20,8 @@ function App() {
         <Nabvar cart={cart}/>
         <Header></Header>
         <CarRental></CarRental>
+        <CarList></CarList>
+        
       
      
           
