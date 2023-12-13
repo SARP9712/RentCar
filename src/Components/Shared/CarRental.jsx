@@ -1,27 +1,42 @@
 import React,  { useState} from 'react'
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { CarsData } from '../CarsData';
-
+import {AddtoCart} from '../AddtoCart';
 import Seat from '../img/seat.png'
 import Fuel from '../img/fuel.png'
+import Nabvar from '../Nabvar';
+import PageRental from '../PageRental';
 
 
 
-const CarRental = () => {
-   const [cart, setCart] = useState([])
-  
-     
-    const addToCart = (car) => {
-      setCart([...cart, car]);
 
-        const handleAddToCart = (car) => {
-    // Asegúrate de que addToCart está definido antes de llamarlo
-    if (addToCart) {
-      addToCart(car);
-    }
+
+
+
+export const CarRental = () => {
+  // const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+
+
+  const handleViewDetails = (carId) => {
+    navigate(`/car/${carId}`);
   };
 
-    };
+  //  const addToCart = (car) => {
+  //       setCart([...cart, car]);
+  //       onAddToCart(car);
+    
+  //   // const handleAddToCart = (car) => {
+  //   //   // Asegúrate de que addToCart está definido antes de llamarlo
+  //   //   if (addToCart) {
+  //   //     addToCart(car);
+  //   //   }
+
+  //   // };
+   
+  // };
+
+ 
 
   return (
     <div className="container mx-auto mt-8 p-8">
@@ -53,17 +68,22 @@ const CarRental = () => {
         
 
           <img src={car.image} alt="" />
+
+
+          <Link to={`/car/${car.id}`}>
           <button
             className="mt-2 bg-[#EC8F5E] font-bold font-oswald uppercase text-white px-4 py-2 rounded"
-            onClick={() => addToCart(car)}
+           onClick={()=>handleViewDetails(car.id)}
           >
             Añadir al Carrito
           </button>
+
+          </Link>
         </div>
       ))}
     </div>
 
-  
+{/*   
 
      <div className="">
       <h2 className="text-2xl font-bold mb-4" >Tu Carrito </h2>
@@ -74,10 +94,14 @@ const CarRental = () => {
           </li>
         ))}
       </ul>
-    </div> 
-
+    </div>  */}
+{/* 
+    <Nabvar cart={cart} addToCart={addToCart} /> */}
     
   </div>
+  
+
+  
   )
 }
 

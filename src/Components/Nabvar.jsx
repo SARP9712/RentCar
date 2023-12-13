@@ -4,14 +4,16 @@ import LenguajeSelector from './Shared/LenguajeSelector'
 import { FiMenu, FiShoppingCart } from "react-icons/fi";
 import Carrito from './Shared/Carrito';
 import CarRental from './Shared/CarRental';
+import { CarsData } from './CarsData';
+import { AddtoCart } from './AddtoCart';
 
-function Nabvar() {
+function Nabvar({cartProp}) {
 
 
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [cartOpen, setCartOpen] = useState(false);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState(cartProp || []);
 
     const toggleMenu = () => {
       setMenuOpen(!menuOpen);
@@ -21,8 +23,14 @@ function Nabvar() {
         setCartOpen(!cartOpen);
       };
     
+      const addToCart = (car) => {
+        setCart([...cart, car])
+      }
 
- 
+
+
+
+ console.log(cart)
 
   return (
     <div>
@@ -79,34 +87,25 @@ function Nabvar() {
 
   {/* CARRITO DE COMPRA  */}
 
-{cartOpen ? (
-  <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
-{/* 
-                  {cartOpen && <Carrito cart={cart} toggleCart={toggleCart} />} */}
+{cartOpen && <addToCart cart={cart} />}
+{/* //   <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+// {/* 
+//                   {cartOpen && <Carrito cart={cart} toggleCart={toggleCart} />} */}
 
-                  
-     {/* <div className="">
-      <h2 className="text-2xl font-bold mb-4" >Tu Carrito </h2>
-      <ul>
-        {CarRental.map((item) => (
-          <li key={item.id}>
-            {`${item.model} - ${item.fuelType} - $${item.price}`}
-          </li>
-        ))}
-      </ul>
-    </div>  */}
+  
+  
     
 
-  </div>
-) : (
-  <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
- <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
+{/* {/* //   </div>
+// ) : (
+//   <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
+//  <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
                 
-                <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
-                <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
-                <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Acerca de nosotros</a>
-  </div>
-)}
+//                 <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
+//                 <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
+//                 <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Acerca de nosotros</a>
+//   </div>
+)}   */}
 
 
 
@@ -129,5 +128,7 @@ function Nabvar() {
     </div>
   )
 }
+
+
 
 export default Nabvar
