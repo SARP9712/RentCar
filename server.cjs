@@ -218,7 +218,7 @@ app.post('/enviar-correo-y-procesar-reserva', async (req, res) => {
     // Envío de correo
     const mensajeCorreo = {
       from: 'alonsopaez1206@gmail.com',
-      to: clientEmail,  // Reemplaza con el correo del destinatario
+      to:[ clientEmail, 'sevillarentacar@gmail.com'], // Reemplaza con el correo del destinatario
       subject: 'Confirmación de reserva',
       html: contenidoCorreo,
       // Puedes personalizar el contenido del correo según tus necesidades

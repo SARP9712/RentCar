@@ -30,10 +30,10 @@ function Header() {
            
            <div className=' box-content flex flex-col bg-[#EC8F5E] text-center p-4 w-65 ' >
 
-          <h1 className='font-bold font-oswald uppercase text-2xl text-white'> ¡Descubre una nueva forma de explorar con nosotros! </h1>   
+            
            
 
-           <h1 className='text-1xl font-web pt-2 border-b border-slate-500'> ¡ Tu Coche de hoy al mejor precio!</h1>
+           <h1 className='text-2xl pt-2 border-b white font-oswald'> ¡ Tu Coche de hoy al mejor precio!</h1>
 
         
 
