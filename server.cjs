@@ -233,7 +233,7 @@ app.post('/enviar-correo-y-procesar-reserva', async (req, res) => {
   }
 });
 
-const puerto = 3001;  // El puerto puede variar según tu configuración
+const puerto = process.env.PORT || 3001;  // El puerto puede variar según tu configuración
 app.listen(puerto, () => {
   console.log(`Servidor backend escuchando en el puerto ${puerto}`);
 });
