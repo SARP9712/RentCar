@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Logo from '../assets/logo.png';
+import Logo from '../assets/Logo.png';
 import LenguajeSelector from './Shared/LenguajeSelector'
 import { FiMenu, FiShoppingCart, FiPhone, FiMail } from "react-icons/fi";
 import Carrito from './Shared/Carrito';
