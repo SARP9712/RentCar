@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useStripe } from '@stripe/react-stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import ProductDisplay from './ProductDisplay';
-import Logo from '../assets/logo.png';
+import Logo from '../assets/Logo.png';
 import axios from 'axios';
 // import { Document, Page } from 'react-pdf';
 
