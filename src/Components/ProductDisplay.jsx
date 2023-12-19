@@ -1,6 +1,6 @@
 import React from "react";
 import CarItem from "./CarItem";
-import Ford from "../assets/Ford.png"
+import Ford from "../assets/ford.png"
 import Toyota from "../assets/Toyota.png"
 
 const carsData = [
