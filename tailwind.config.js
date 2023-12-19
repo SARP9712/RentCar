@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {},
       fontFamily: {
-        abc:["Toboto", "sans-serif"],
+        abc:["Roboto", "sans-serif"],
         web:["Archivo", "sans-serif"],
         oswald:["Oswald", "sans-serif"]
     },

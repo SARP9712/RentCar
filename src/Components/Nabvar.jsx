@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import Logo from '../assets/Logo.png'
+import Logo from '../assets/logo.png';
 import LenguajeSelector from './Shared/LenguajeSelector'
-import { FiMenu, FiShoppingCart } from "react-icons/fi";
+import { FiMenu, FiShoppingCart, FiPhone, FiMail } from "react-icons/fi";
 import Carrito from './Shared/Carrito';
 import CarRental from './Shared/CarRental';
 import { CarsData } from './CarsData';
@@ -38,24 +38,38 @@ function Nabvar({cartProp}) {
             <div className='container mx-auto flex justify-between items-center'> 
 
             <div className='text-white text-lg font-bold'>
-                        <img src={Logo} className='h-[6rem]' alt="" />
+                        <img src={Logo} className='h-[9rem] w-[7rem] box-content' alt="" />
+
+                          <h2></h2>
+
             </div>
+                                  
+                    <div className='flex flex-col items-left gap-4'>
+                      <div className='flex items-center gap-2'>
+                      <FiPhone className='text-xl text-[#283389]'></FiPhone> <span className='text-[1rem] font-oswald text-[#283389]'> +34 695 94 10 16</span>
 
-          
-          
+                      </div>
+                     
+                      <div className='flex items-center gap-2'>
+                      <FiMail className='text-1xl text-[#283389]'></FiMail> <span className='text-[1rem] font-oswald text-[#283389]'>sevillarentcar@gmail.com</span>
+                      </div>
 
-                <LenguajeSelector></LenguajeSelector>
+                    
+                    </div>
+              
 
-                <button onClick={toggleCart}>
+                {/* <LenguajeSelector></LenguajeSelector> */}
+
+                {/* <button onClick={toggleCart}>
                 <FiShoppingCart className='text-3xl text-white' />
 
-                </button>
+                </button> */}
 
              
                 <button onClick={toggleMenu} className="text-white focus:outline-none">
 
                     
-                <FiMenu className='text-white text-4xl' />
+                <FiMenu className='text-[#283389] text-4xl' />
 
                 
 
