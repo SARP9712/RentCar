@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef}   from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, Route, useParams } from 'react-router-dom';
 import { CarsData } from './CarsData'
 import Formulario from './Shared/Formulario';
 import { Reserva } from './Shared/Reserva';
@@ -77,7 +77,8 @@ const [pageNumber, setPageNumber] = useState(1);
   const [orderNumber, setOrderNumber] = useState(null);
 
 
-  const section1Ref = useRef(null);
+  const section1Ref = useRef();
+  const navbarHeight =220;
   const section2Ref = useRef(null);
   const section3Ref = useRef(null);
   const section4Ref = useRef(null);
@@ -404,7 +405,16 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
 
+ // Limitacion de reservas 
 
+ const [selectedCar, setSelectedCar] = useState('');
+ const [selectedDate, setSelectedDate] = useState('');
+
+ const [cars] = useState([
+  { id: 1, name: car.model, unavailableDates: ['2023-12-20', '2023-12-22'] },
+  { id: 2, name: 'Carro 2', unavailableDates: ['2023-06-18', '2023-06-25'] },
+  // ... otros coches
+]);
 
 
 
@@ -416,12 +426,12 @@ const [pageNumber, setPageNumber] = useState(1);
       e.preventDefault();
 
       calcularPrecio();
-      
-      if (section1Ref && section1Ref.current) {
-        scrollToSection(section1Ref);
+          
+
+      if (section1Ref.current) {
+        const offset = section1Ref.current.offsetTop - navbarHeight;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
       }
-
-
 
 
 
@@ -433,15 +443,7 @@ const [pageNumber, setPageNumber] = useState(1);
         return;
       }
     
-    
   
-
-      
-      
-
-    
-  
-
     }
 
     const scrollToSection = (sectionRef) => {
@@ -522,6 +524,8 @@ const [pageNumber, setPageNumber] = useState(1);
           sucursalRecogida,
           horadejada,
           horaRecogida,
+          diadejada,
+          diaRecogida,
           
           // Otros datos del formulario
           
@@ -552,7 +556,7 @@ const [pageNumber, setPageNumber] = useState(1);
 
            <img className='border' src={car.image} alt={car.model} />
 
-           <p className='font-bold font-oswald text-2xl'> DE {car.price.toFixed(2) }€/Dia</p>
+           <p className='font-bold font-oswald text-2xl'>{car.price.toFixed(2) }€/Dia</p>
      
       <h1 className='font-oswald uppercase text-center p-4 text-2xl'> Informacion de Precios</h1>
 
@@ -595,7 +599,7 @@ const [pageNumber, setPageNumber] = useState(1);
           onChange={(e) => setDiaRecogida(e.target.value)}
           min={new Date().toISOString().split('T')[0]} 
           className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
-          required
+          
         />
          <input
           type="time"
@@ -648,20 +652,26 @@ const [pageNumber, setPageNumber] = useState(1);
           ))}
         </div>
 
-          <button 
+
+               
+                  <button 
           className='border w-full bg-[#EC8F5E] h-50 p-3 text-white font-oswald rounded-xl mt-2 uppercase' onClick={handleAlquilarClick}> Calcular Presuspuesto</button>
+             
+         
           
 
 
-   
+                
           {precioTotal !== 0 && (
-        <div  className='text-center mt-4'  >
+
+           
+        <div  className='text-center mt-10 h-80 ' ref={section1Ref}>
 
           
         {/* <h2>Precio del Coche por Día:</h2>
          <p className='font-bold'>{precioCochePorDia.toFixed(2)}€</p> */}
           
-          <h2 ref={section1Ref} className='font-oswald uppercase'> Precio de Complementos:</h2>
+          <h2  className='font-oswald uppercase'> Precio de Complementos:</h2>
           <p className='font-bold'>{complementoTotal.toFixed(2)}€</p>
           <h2 className='font-oswald uppercase'>Precio Coche por dia:</h2>
           <p className='font-bold'>{precioCochePorDia.toFixed(2)}€</p>
@@ -672,7 +682,7 @@ const [pageNumber, setPageNumber] = useState(1);
        
   
 
-              <button  className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-2'  onClick={handleReservaClick}>REALIZAR RESERVA</button>
+              <button  className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-10'  onClick={handleReservaClick}>REALIZAR RESERVA</button>
               
          
        
@@ -682,7 +692,7 @@ const [pageNumber, setPageNumber] = useState(1);
         
 
       )}
-
+       
       
         {message && 
               <Message message={message} />}
@@ -702,17 +712,17 @@ const [pageNumber, setPageNumber] = useState(1);
           <h1 className="block text-gray-600 text-3xl font-oswald uppercase font-medium mb-2 text-center">Detalles de Facturacion</h1>
 
           <div className='flex gap-3'>
-          <label htmlFor="nombre"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Nombre:    <input
+          <label htmlFor="nombre"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Nombre:<input
             type="text" 
             id='clientName'        // id="nombre"       // name="nombre"      // value={datosFormularioCliente.nombre}     // onChange={handleInputChangeCliente}
             value={clientName}
             onChange={(e)=>setClientName(e.target.value)}
-            className='border rounded-md p-2'
-
+            className='border rounded-md p-2 w-40'
+ 
             required
           /></label>
 
-          <label htmlFor="lastName"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Apellidos: <input required type="text" id='lasNamte' value={ClientLastName} onChange={(e)=>setClientLastName(e.target.value)} className='border rounded-md p-2'/></label>
+          <label htmlFor="lastName"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Apellidos: <input required type="text" id='lasNamte' value={ClientLastName} onChange={(e)=>setClientLastName(e.target.value)} className='border rounded-md p-2 w-40'/></label>
        
 
            
@@ -834,16 +844,18 @@ const [pageNumber, setPageNumber] = useState(1);
            
          
 
-         <label htmlFor="metodoPago">Método de Pago:</label>
+         <label htmlFor="metodoPago" className='font-oswald text-1xl'>Método de Pago:</label>
           <select
             id="metodoPago"
             name="metodoPago"
             value={datosFormularioCliente.metodoPago}
             onChange={handleInputChangeCliente}
             required
+
+            className='font-oswald uppercase bg-[#EC8F5E] rounded-xl p-2 text-white'
           >
             <option value="">Selecciona un método de pago</option>
-            <option value="transferencia">Transferencia Bancaria</option>
+            <option value="transferencia" className='font-oswald'>Transferencia Bancaria</option>
             <option value="bizum">Bizum</option>
             <option value="tarjeta">Pago con Tarjeta</option>
           </select>
@@ -972,7 +984,7 @@ const [pageNumber, setPageNumber] = useState(1);
       {datosdetransfer && (
 
 
-        <div className='h-screen flex flex-col pt-[30rem] items-center justify-center' > 
+        <div className='h-screen flex flex-col pt-[40rem] items-center justify-center' > 
           <h1 className='text-3xl text-center font-oswald'> Finalizar compra</h1>
 
           <div className='p-4 pt-4'>
@@ -986,7 +998,7 @@ const [pageNumber, setPageNumber] = useState(1);
               
               <div>
               <span> Metodo De pago: </span>
-                <span className='text-1xl font-oswald'> Transferencia Bancaria </span>
+                <span className='text-1xl font-oswald '> Transferencia Bancaria </span>
               </div>
 
                
@@ -1044,7 +1056,7 @@ const [pageNumber, setPageNumber] = useState(1);
                   <p className='font-bold  mb-2'>Detalles del Pago</p>
                   
                   <span className=''>Total:</span>
-                  <span className='font-bold'>{precioTotal.toFixed(2)}</span>
+                  <span className='font-bold'>{precioTotal.toFixed(2)}€</span>
 
                 
 

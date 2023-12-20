@@ -126,16 +126,28 @@ app.post('/enviar-correo-y-procesar-reserva', async (req, res) => {
       <td>${carModel}</td>
     </tr>
     <tr>
+    <th>Dia de Entrega:</th>
+    <td>${diaRecogida}</td>
+    <tr>
+    <th>Dia de Recogida:</th>
+    <td>${diadejada}</td>
+  </tr>
+  </tr>
+
+
+    <tr>
       <th>Lugar de Entrega:</th>
       <td>${sucursalEntrega}</td>
-      <th>Hora de Recogida:</th>
+      <th>Hora de Entrega:</th>
       <td>${horadejada}</td>
 
       <th>Lugar de Devolucion:</th>
       <td>${sucursalRecogida}</td>
-      <th>Hora de Recogida:</th>
+      <th>Hora de Devolucion:</th>
       <td>${horaRecogida}</td>
     </tr>
+
+
     <!-- Agrega más filas según sea necesario -->
   </table>
 

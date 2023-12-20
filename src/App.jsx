@@ -16,7 +16,28 @@ import RedSysIntegration from './Components/Shared/RedSysIntegration'
 import TuComponenteDePago from './Components/Shared/ComponenteDepago'
 
 
+//Firebase
+
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBuIW2rhrRSunc9CrG_0T4E4MBDIO9O1Lc",
+  authDomain: "sevillarentacar-1c41d.firebaseapp.com",
+  projectId: "sevillarentacar-1c41d",
+  storageBucket: "sevillarentacar-1c41d.appspot.com",
+  messagingSenderId: "157155148979",
+  appId: "1:157155148979:web:7f6e1734e78c42788e5cc6",
+  measurementId: "G-GDQ7DZGFL6"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 function App() {
  
