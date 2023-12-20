@@ -39,7 +39,7 @@ export const CarRental = () => {
  
 
   return (
-    <div className="h-screen pt-[12rem] p-8">
+    <div className="h-screen pt-[40rem] p-8 items-center justify-center flex flex-col  ">
     <h1 className="text-3xl text-center font-bold font-oswald uppercase mb-4">Coches Disponibles</h1>
 
     <div className="grid grid-cols-1 gap-4 bg-wh ">

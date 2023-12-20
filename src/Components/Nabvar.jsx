@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import Logo from '../assets/Logo.png';
 import LenguajeSelector from './Shared/LenguajeSelector'
-import { FiMenu, FiShoppingCart, FiPhone, FiMail } from "react-icons/fi";
+import { FiMenu, FiShoppingCart, FiPhone, FiMail, FiInstagram } from "react-icons/fi";
+import { BiLogoTiktok } from "react-icons/bi";
 import Carrito from './Shared/Carrito';
 import CarRental from './Shared/CarRental';
 import { CarsData } from './CarsData';
@@ -35,11 +36,13 @@ function Nabvar({cartProp}) {
 
   return (
     <div>
-        <nav className='bg-[#EC8F5E] p-4 fixed w-full'>
+        <nav className='bg-[#EC8F5E] p-0 fixed w-full'>
             <div className='container mx-auto flex justify-between items-center'> 
 
-            <div className='text-white text-lg font-bold box-content'>
-                        <img src={Logo} className='h-[10rem] w-[7rem] box-content' alt="" />
+
+            <img src={Logo} className='h-[100%] w-[40%] ' alt="" />
+            <div className='text-white text-lg font-bold box-content ml-0 '>
+                     
 
                           <h2></h2>
 
@@ -55,7 +58,18 @@ function Nabvar({cartProp}) {
                       <FiMail className='text-1xl text-white'></FiMail> <span className='text-[1rem] font-oswald text-white'>sevillarentacar@gmail.com</span>
                       </div>
 
+
                     
+              <div className=' flex gap-4 items-center justify-center'>
+               
+               <a href="https://www.instagram.com/sevillarentacar/">
+               <FiInstagram className='text-2xl text-white'/>
+
+               </a>
+             <a href="https://www.tiktok.com/@sevillarentacar
+             "><BiLogoTiktok className='text-2xl text-white' /></a>
+              
+                </div>  
                     </div>
               
 
@@ -80,7 +94,7 @@ function Nabvar({cartProp}) {
 
 
                 {menuOpen ? (
-  <div className='mt-2 absolute right-0 h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+  <div className='mt-2 absolute right-0 h-screen w-60 top-[10.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
 <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
                 
                 <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>

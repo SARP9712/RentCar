@@ -33,7 +33,7 @@ function Header() {
             
            
 
-           <h1 className='text-2xl pt-2 border-b white font-oswald'> ¡ Tu Coche de hoy al mejor precio!</h1>
+           <h1 className='text-2xl pt-2 border-b white font-oswald text-white'> ¡ Tu Coche de hoy al mejor precio!</h1>
 
         
 

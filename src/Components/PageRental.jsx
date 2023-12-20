@@ -77,6 +77,12 @@ const [pageNumber, setPageNumber] = useState(1);
   const [orderNumber, setOrderNumber] = useState(null);
 
 
+  const section1Ref = useRef(null);
+  const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
+  const section4Ref = useRef(null);
+
+
 
 
 
@@ -148,7 +154,13 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
   const generateOrderNumber = (e) => {
+    if (section3Ref && section3Ref.current) {
+      scrollToSection(section1Ref);
+    }
+    
     e.preventDefault();
+  
+  
 
     const formClient = {
       clientName,
@@ -162,6 +174,8 @@ const [pageNumber, setPageNumber] = useState(1);
     }
 
     setformClient(formClient);
+
+    
 
     if (!clientName || !ClientLastName || !clientEmail || !clientPhone || !clientAdress || !Clientecp) {
       // Muestra un mensaje de error o realiza la acción que prefieras
@@ -314,7 +328,18 @@ const [pageNumber, setPageNumber] = useState(1);
 };
 
     const handleReservaClick = async (e)=> {
+      if (section2Ref && section2Ref.current) {
+        scrollToSection(section1Ref);
+      }
       e.preventDefault();
+
+      
+     
+
+
+
+      
+     
       console.log("Reserva realizada con éxito!");
       logDatos();
      
@@ -390,14 +415,26 @@ const [pageNumber, setPageNumber] = useState(1);
     const handleAlquilarClick = async (e) => {
       e.preventDefault();
 
+      calcularPrecio();
+      
+      if (section1Ref && section1Ref.current) {
+        scrollToSection(section1Ref);
+      }
+
+
+
+
+
+    
+
       if (!sucursalRecogida || !sucursalEntrega || !diaRecogida || !horaRecogida || !diadejada || !horadejada) {
         // Muestra un mensaje de error o realiza la acción que prefieras
         console.error('Por favor, completa todos los campos obligatorios.');
         return;
       }
     
-      calcularPrecio();
-      resultRef.current.scrollIntoView({ behavior: 'smooth' });
+    
+  
 
       
       
@@ -406,6 +443,12 @@ const [pageNumber, setPageNumber] = useState(1);
   
 
     }
+
+    const scrollToSection = (sectionRef) => {
+      if (sectionRef && sectionRef.current) {
+        sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
  
 
     const Message = ({ message }) => (
@@ -522,6 +565,7 @@ const [pageNumber, setPageNumber] = useState(1);
          <select name="" id="localidadEntrega"  value={sucursalEntrega} required onChange={(e) => setSucursalEntrega(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
         >
             <option value="">Escoge un Sitio </option>
+            <option value="aDomicilio"> A Domicilio </option>
             <option value="EstacionSantaJusta">Estacion Santa Justa </option>
             <option value="SVQ">Aeropuerto de Sevilla - San Pablo </option>
         </select>
@@ -535,8 +579,9 @@ const [pageNumber, setPageNumber] = useState(1);
          <select name="" id="localidadRecogida"  value={sucursalRecogida} required onChange={(e) => setSucursalRecogida(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
         >
             <option value="">Escoge un Sitio </option>
+            <option value="aDomicilio"> A Domicilio </option>
             <option value="EstacionSantaJusta">Estacion Santa Justa </option>
-            <option value="SVQ">Aeropuerto de Sevilla - San Pablo </option>
+            <option value="AeropuertoSevilla">Aeropuerto de Sevilla - San Pablo </option>
         </select>
         </label>
 
@@ -610,13 +655,13 @@ const [pageNumber, setPageNumber] = useState(1);
 
    
           {precioTotal !== 0 && (
-        <div className='text-center mt-4 ' ref={resultRef} >
+        <div  className='text-center mt-4'  >
 
           
         {/* <h2>Precio del Coche por Día:</h2>
          <p className='font-bold'>{precioCochePorDia.toFixed(2)}€</p> */}
           
-          <h2 className='font-oswald uppercase'> Precio de Complementos:</h2>
+          <h2 ref={section1Ref} className='font-oswald uppercase'> Precio de Complementos:</h2>
           <p className='font-bold'>{complementoTotal.toFixed(2)}€</p>
           <h2 className='font-oswald uppercase'>Precio Coche por dia:</h2>
           <p className='font-bold'>{precioCochePorDia.toFixed(2)}€</p>
@@ -651,7 +696,7 @@ const [pageNumber, setPageNumber] = useState(1);
       <div>
 
       {mostrarFormularioCliente && (
-        <form className='flex flex-col items-left w-50 gap-5 pt-20'>
+        <form className='flex flex-col items-left w-50 gap-5 pt-20' >
           {/* Campos del formulario del cliente */}
 
           <h1 className="block text-gray-600 text-3xl font-oswald uppercase font-medium mb-2 text-center">Detalles de Facturacion</h1>
@@ -927,7 +972,7 @@ const [pageNumber, setPageNumber] = useState(1);
       {datosdetransfer && (
 
 
-        <div className='h-screen flex flex-col pt-[30rem] items-center justify-center'> 
+        <div className='h-screen flex flex-col pt-[30rem] items-center justify-center' > 
           <h1 className='text-3xl text-center font-oswald'> Finalizar compra</h1>
 
           <div className='p-4 pt-4'>
