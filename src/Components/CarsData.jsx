@@ -8,6 +8,9 @@ export const CarsData = [
 
 ]
 
+
+
+
 const ProductDisplay = () => (
     <section>
       {CarsData.map((car) => (

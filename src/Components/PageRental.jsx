@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef}   from 'react'
-import { Link, Route, useParams } from 'react-router-dom';
+import { Await, Link, Route, useParams } from 'react-router-dom';
 import { CarsData } from './CarsData'
 import Formulario from './Shared/Formulario';
 import { Reserva } from './Shared/Reserva';
@@ -74,19 +74,30 @@ const [pageNumber, setPageNumber] = useState(1);
   const [complementoTotalState, setComplementoTotalState] = useState(0);
   const [precioCochePorDiaState, setPrecioCocheporDiaState] = useState(0);
   const [totaldeCostoState, setTotaldeCostoState] = useState(0);
-  const [orderNumber, setOrderNumber] = useState(null);
 
 
-  const section1Ref = useRef();
-  const navbarHeight =220;
-  const section2Ref = useRef(null);
-  const section3Ref = useRef(null);
-  const section4Ref = useRef(null);
+  
 
 
+// METODOS DE PAGO 
+const [metodoDePago, setMetodoDePago] = useState("");
+const [completarReserva, setCompletarReserva] = useState(false);
 
 
 
+const [orderNumber, setOrderNumber] = useState(null);
+
+
+
+
+
+///////////////////////////////
+
+const [seccionActual, setSeccionActual] = useState('seccion1');
+
+const cambiarSeccion = (nuevaSeccion) => {
+  setSeccionActual(nuevaSeccion);
+};
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -148,52 +159,10 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
 
-
-
-
   const Cardeposito = car.deposito;
 
 
-  const generateOrderNumber = (e) => {
-    if (section3Ref && section3Ref.current) {
-      scrollToSection(section1Ref);
-    }
-    
-    e.preventDefault();
-  
-  
 
-    const formClient = {
-      clientName,
-      ClientLastName,
-      ClientCompany,
-      clientAdress,
-      Clientecp,
-      clientPhone,
-      clientEmail
-
-    }
-
-    setformClient(formClient);
-
-    
-
-    if (!clientName || !ClientLastName || !clientEmail || !clientPhone || !clientAdress || !Clientecp) {
-      // Muestra un mensaje de error o realiza la acción que prefieras
-      console.error('Por favor, completa todos los campos obligatorios.');
-      return;
-    }
-
-
-  
-
-    setDatosDeTransfer(true)
-    // Generar un número de pedido único (puedes personalizar esta lógica según tus necesidades)
-    const newOrderNumber = Math.floor(Math.random() * 1000) + 1;
-    setOrderNumber(newOrderNumber);
-
-  
-  };
 
 
   
@@ -230,20 +199,20 @@ const [pageNumber, setPageNumber] = useState(1);
 
   const fechaFormateada = fechaActual.toLocaleDateString();
   
-  const logDatos = () => {
-    console.log('Datos de la reserva:');
-    console.log('Carro:', car);
-    console.log('Sucursal de recogida:', sucursalRecogida);
-    console.log('Sucursal de entrega:', sucursalEntrega);
-    console.log('Fecha y hora de recogida:', `${diaRecogida} ${horaRecogida}`);
-    console.log('Fecha y hora de dejada:', `${diadejada} ${horadejada}`);
-    console.log('Complementos seleccionados:', complementos);
-    console.log('Precio total:', precioTotal);
-    console.log('Precio coche por día:', precioCochePorDia);
-    console.log('Precio de complementos:', complementoTotal);
-    console.log('Precio deposito:', Cardeposito);
-    console.log('Precio total de costo:', totaldeCosto);
-  };
+  // const logDatos = () => {
+  //   console.log('Datos de la reserva:');
+  //   console.log('Carro:', car);
+  //   console.log('Sucursal de recogida:', sucursalRecogida);
+  //   console.log('Sucursal de entrega:', sucursalEntrega);
+  //   console.log('Fecha y hora de recogida:', `${diaRecogida} ${horaRecogida}`);
+  //   console.log('Fecha y hora de dejada:', `${diadejada} ${horadejada}`);
+  //   console.log('Complementos seleccionados:', complementos);
+  //   console.log('Precio total:', precioTotal);
+  //   console.log('Precio coche por día:', precioCochePorDia);
+  //   console.log('Precio de complementos:', complementoTotal);
+  //   console.log('Precio deposito:', Cardeposito);
+  //   console.log('Precio total de costo:', totaldeCosto);
+  // };
 
 
     
@@ -329,76 +298,45 @@ const [pageNumber, setPageNumber] = useState(1);
 };
 
     const handleReservaClick = async (e)=> {
-      if (section2Ref && section2Ref.current) {
-        scrollToSection(section1Ref);
-      }
+         
+     
       e.preventDefault();
-
-      
-     
-
-
-
-      
-     
-      console.log("Reserva realizada con éxito!");
-      logDatos();
-     
-      const reservaData = {
-        car,
-        sucursalRecogida,
-        sucursalEntrega,
-        diaRecogida,
-        horaRecogida,
-        diadejada,
-        horadejada,
-        complementos,
-        precioTotal,
-        precioCochePorDia,
-        complementoTotal,
-        deposito,
-        totaldeCosto,
-      };
-
-    
-
       setDatosReserva(reservaData);
-      setMostrarFormularioCliente(true);
+      if (seccionRef1.current) {
+        console.log('Antes del scrollIntoView');
+        seccionRef1.current.scrollIntoView({ behavior: 'smooth' });
+        await new Promise(resolve => setTimeout(resolve, 1000));  // Pausa de 1 segundo
+        console.log('Después del scrollIntoView');
+      }
 
+     
+      setMostrarFormularioCliente(true);
+  
+      // await logDatos();
+     
+      // const reservaData = {
+      //   car,
+      //   sucursalRecogida,
+      //   sucursalEntrega,
+      //   diaRecogida,
+      //   horaRecogida,
+      //   diadejada,
+      //   horadejada,
+      //   complementos,
+      //   precioTotal,
+      //   precioCochePorDia,
+      //   complementoTotal,
+      //   deposito,
+      //   totaldeCosto,
+      // };
+
+    
+     
+   
+
+    
    
    
-      // try {
-      //   // Datos de la transacción desde el formulario o cualquier otro lugar necesario
-      //   const datosTransaccion = {
-      //     // ... Tus datos aquí
-      //   };
-  
-      //   // URL de tu servidor Node.js
-      //   const urlServidor = 'http://localhost:3000/realizarPago';
-  
-      //   // Realizar la solicitud al servidor Node.js
-      //   const response = await axios.post(urlServidor, datosTransaccion);
-  
-      //   // Manejar la respuesta del servidor Node.js
-      //   console.log(response.data);
-      // } catch (error) {
-      //   console.error('Error al realizar el pago:', error.message);
-      // }
-    
-      
-    
-  
-      // try {
-      //   // Aquí deberías realizar la lógica de pago con Stripe
-      //   // Puedes utilizar la librería @stripe/react-stripe-js para este propósito
-  
-      //   // Después de un pago exitoso, puedes redirigir a la página de confirmación o agradecimiento
-      //   history.push('/confirmacion');
-  
-      // } catch (error) {
-      //   console.error('Error durante el pago con Stripe:', error);
-      //   alert('Hubo un error durante el proceso de pago. Por favor, inténtalo de nuevo.');
-      // }
     };
   
     // Resto del código...
@@ -418,39 +356,31 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
 
-
+const seccionRef = useRef(null);
+const seccionRef1 = useRef(null);
+const seccionRef2=useRef(null);
     
 
 
     const handleAlquilarClick = async (e) => {
       e.preventDefault();
-
-      calcularPrecio();
-          
-
-      if (section1Ref.current) {
-        const offset = section1Ref.current.offsetTop - navbarHeight;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
-      }
-
-
-
-    
-
+  
+      
       if (!sucursalRecogida || !sucursalEntrega || !diaRecogida || !horaRecogida || !diadejada || !horadejada) {
         // Muestra un mensaje de error o realiza la acción que prefieras
         console.error('Por favor, completa todos los campos obligatorios.');
         return;
       }
+
+    await calcularPrecio();
+            
+      seccionRef.current.scrollIntoView({ behavior: 'smooth' });
+  
     
   
     }
 
-    const scrollToSection = (sectionRef) => {
-      if (sectionRef && sectionRef.current) {
-        sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
+  
  
 
     const Message = ({ message }) => (
@@ -541,8 +471,63 @@ const [pageNumber, setPageNumber] = useState(1);
         console.error('Error al enviar el correo y procesar la reserva', error);
       }
     };
+
+
+
+    const generateOrderNumber = async (e) => {
+
   
 
+ 
+    
+      e.preventDefault();
+    
+      
+  
+      const formClient = {
+        clientName,
+        ClientLastName,
+        ClientCompany,
+        clientAdress,
+        Clientecp,
+        clientPhone,
+        clientEmail
+  
+      }
+      setDatosDeTransfer(true)
+      setformClient(formClient);
+  
+      await generateReference();
+
+      seccionRef2.current.scrollIntoView({ behavior: 'smooth' });
+  
+      if (!clientName || !ClientLastName || !clientEmail || !clientPhone || !clientAdress || !Clientecp) {
+        // Muestra un mensaje de error o realiza la acción que prefieras
+        console.error('Por favor, completa todos los campos obligatorios.');
+        return;
+      }
+  
+  
+    
+  
+  
+      // Generar un número de pedido único (puedes personalizar esta lógica según tus necesidades)
+     
+        // Genera un número de pedido único (puedes personalizar esta lógica según tus necesidades)
+      
+      
+        
+      
+    
+    };
+  
+  
+
+    const generateReference = () => {
+      const newOrderNumber = Math.floor(Math.random() * 1000) + 1;
+      setOrderNumber(newOrderNumber);
+      
+    }
 
 
   if (!car) {
@@ -556,7 +541,7 @@ const [pageNumber, setPageNumber] = useState(1);
 
            <img className='border' src={car.image} alt={car.model} />
 
-           <p className='font-bold font-oswald text-2xl'>{car.price.toFixed(2) }€/Dia</p>
+           <p className='font-bold font-oswald text-2xl'> {car.price.toFixed(2) }€/Dia</p>
      
       <h1 className='font-oswald uppercase text-center p-4 text-2xl'> Informacion de Precios</h1>
 
@@ -566,7 +551,7 @@ const [pageNumber, setPageNumber] = useState(1);
         
          Lugar de Entrega
 
-         <select name="" id="localidadEntrega"  value={sucursalEntrega} required onChange={(e) => setSucursalEntrega(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
+         <select name="" id="localidadEntrega" required value={sucursalEntrega} onChange={(e) => setSucursalEntrega(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
         >
             <option value="">Escoge un Sitio </option>
             <option value="aDomicilio"> A Domicilio </option>
@@ -599,14 +584,14 @@ const [pageNumber, setPageNumber] = useState(1);
           onChange={(e) => setDiaRecogida(e.target.value)}
           min={new Date().toISOString().split('T')[0]} 
           className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
+          required
           
         />
          <input
           type="time"
           id="horaEntrega"
           value={horaRecogida}
-          onChange={(e) => setHoraRecogida(e.target.value)}
-          
+          onChange={(e) => setHoraRecogida(e.target.value)}          
           className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
           required
         />
@@ -653,19 +638,29 @@ const [pageNumber, setPageNumber] = useState(1);
         </div>
 
 
-               
-                  <button 
-          className='border w-full bg-[#EC8F5E] h-50 p-3 text-white font-oswald rounded-xl mt-2 uppercase' onClick={handleAlquilarClick}> Calcular Presuspuesto</button>
+           
+
+<button className='border w-full 
+        bg-[#EC8F5E] 
+          h-50
+          p-3
+          text-white
+           font-oswald
+            rounded-xl
+            mt-2 
+            uppercase' onClick={handleAlquilarClick}> Calcular Presuspuesto</button>
+
+  
              
          
           
 
 
                 
-          {precioTotal !== 0 && (
+          {precioTotal !== 0 &&(
 
            
-        <div  className='text-center mt-10 h-80 ' ref={section1Ref}>
+        <div ref={seccionRef} className='text-center mt-10 h-80 '>
 
           
         {/* <h2>Precio del Coche por Día:</h2>
@@ -680,10 +675,10 @@ const [pageNumber, setPageNumber] = useState(1);
           <h2 className='font-oswald uppercase'>Precio Total:</h2>
           <p className='font-bold'>{totaldeCosto.toFixed(2)}€</p>
        
-  
 
-              <button  className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-10'  onClick={handleReservaClick}>REALIZAR RESERVA</button>
-              
+      
+  
+       <button  className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-10'  onClick={handleReservaClick}>REALIZAR RESERVA</button>   
          
        
 
@@ -703,13 +698,14 @@ const [pageNumber, setPageNumber] = useState(1);
 
             
 
-      <div>
 
       {mostrarFormularioCliente && (
-        <form className='flex flex-col items-left w-50 gap-5 pt-20' >
+        
+      <div >
+        <form className='flex flex-col items-left w-50 gap-5 pt-20   ' ref={seccionRef1} >
           {/* Campos del formulario del cliente */}
 
-          <h1 className="block text-gray-600 text-3xl font-oswald uppercase font-medium mb-2 text-center">Detalles de Facturacion</h1>
+          <h1   className="block text-gray-600 text-3xl font-oswald uppercase font-medium mb-2 text-center">Detalles de Facturacion</h1>
 
           <div className='flex gap-3'>
           <label htmlFor="nombre"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Nombre:<input
@@ -865,8 +861,8 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
 
-{datosFormularioCliente.metodoPago === 'transferencia' && (
-       <div className="container mx-auto my-8 p-6 bg-gray-100 rounded-lg shadow-md">
+{datosFormularioCliente.metodoPago === `transferencia` && (
+       <div className="container mx-auto my-8 p-6 bg-gray-100 rounded-lg shadow-md" >
        <h2 className="text-2xl font-bold mb-4">Realizar Transferencia Paso a Paso</h2>
        <p className="text-gray-700 mb-4">
          Para completar tu reserva, sigue estos pasos:
@@ -884,7 +880,7 @@ const [pageNumber, setPageNumber] = useState(1);
 
         <p className='font-web uppercase font-semibold'>Nombre:</p>
          <span className='font-oswald uppercase'>
-         SL leon de San Marcos
+        leon de San Marcos S.L
          </span>
 
           </div>  
@@ -973,142 +969,151 @@ const [pageNumber, setPageNumber] = useState(1);
 
 
         </form>
+
+            </div>
       )}
 
 
             
 
 
+  
+
+
+                <div >
+
+                { datosdetransfer && datosFormularioCliente.metodoPago ==="transferencia" &&(
+
+
+<div ref={seccionRef2} className='h-screen flex flex-col pt-[40rem] items-center justify-center'  > 
+  <h1 className='text-3xl text-center font-oswald'> Finalizar compra</h1>
+
+  <div className='p-4 pt-4'>
+      <div className='flex gap-2  items-center flex-wrap border border-slate-950 border-l  pb-2 p-5'>
+        <span className=' border-b border-slate-950 '>Referencia:</span>
+        <span className=' border-r pr-2 border-slate-950 font-oswald'> #{orderNumber}</span>
+
+        <span className=' border-b border-slate-950 '>Fecha:</span>
+        <span className=' border-b border-slate-950 font-oswald '> {fechaFormateada}</span>
+
+      
+      <div>
+      <span> Metodo De pago: </span>
+        <span className='text-1xl font-oswald '> Transferencia Bancaria </span>
       </div>
 
-      {datosdetransfer && (
+       
+      </div>
+      <div className='flex flex-wrap'>
+<h1 className='text-2xl font-oswald mb-4'>Detalles del Cliente</h1>
 
-
-        <div className='h-screen flex flex-col pt-[40rem] items-center justify-center' > 
-          <h1 className='text-3xl text-center font-oswald'> Finalizar compra</h1>
-
-          <div className='p-4 pt-4'>
-              <div className='flex gap-2  items-center flex-wrap border border-slate-950 border-l  pb-2 p-5'>
-                <span className=' border-b border-slate-950 '>Referencia:</span>
-                <span className=' border-r pr-2 border-slate-950 font-oswald'> #{orderNumber}</span>
-
-                <span className=' border-b border-slate-950 '>Fecha:</span>
-                <span className=' border-b border-slate-950 font-oswald '> {fechaFormateada}</span>
-
-              
-              <div>
-              <span> Metodo De pago: </span>
-                <span className='text-1xl font-oswald '> Transferencia Bancaria </span>
-              </div>
-
-               
-              </div>
-              <div className='flex flex-wrap'>
-  <h1 className='text-2xl font-oswald mb-4'>Detalles del Cliente</h1>
-
-  <div className='grid grid-cols-2 gap-4'>
-    <div className='mb-4'>
-      <p className='font-bold text-gray-700 uppercase'>Nombre Completo:</p>
-      <p className='font-oswald'>{clientName + ' ' + ClientLastName}</p>
-    </div>
-
-    <div className='mb-4'>
-      <p className='font-bold text-gray-700 uppercase'>Dirección de Facturación:</p>
-      <p className='font-oswald'>{clientAdress}</p>
-    </div>
-
-    <div className='mb-4'>
-      <p className='font-bold text-gray-700 uppercase'>Teléfono:</p>
-      <p className='font-oswald'>{clientPhone}</p>
-    </div>
-
-    <div className='mb-4'>
-      <p className='font-bold text-gray-700 uppercase'>Correo Electrónico:</p>
-      <p className='font-oswald'>{clientEmail}</p>
-    </div>
-
-    <div className='mb-4'>
-      <p className='font-bold text-gray-700 uppercase'>Nombre de la Empresa:</p>
-      <p className='font-oswald'>{ClientCompany}</p>
-    </div>
-  </div>
+<div className='grid grid-cols-2 gap-4'>
+<div className='mb-4'>
+<p className='font-bold text-gray-700 uppercase'>Nombre Completo:</p>
+<p className='font-oswald'>{clientName + ' ' + ClientLastName}</p>
 </div>
-           
-                <h1 className='text-3xl font-oswald text-center pt-10'>Detalles de compra:</h1>
-                                  
-                                  <div className='grid grid-cols-2 gap-8'>
-      <div>
-        <p className='font-bold mb-2'>Detalles del Alquiler</p>
-        <p><span className='font-bold'>Producto:</span> {car.model}</p>
-        <p><span className='font-bold'>Lugar de Entrega:</span> {sucursalEntrega}</p>
-        <p><span className='font-bold'>Día de Entrega:</span> {diadejada}</p>
-        <p><span className='font-bold'>Hora de Entrega:</span> {horadejada}</p>
-      </div>
-      <div>
-        <p className='font-bold mb-2'>Detalles de la Devolución</p>
-        <p><span className='font-bold'>Sucursal de Devolución:</span> {sucursalRecogida}</p>
-        <p><span className='font-bold'>Día de Devolución:</span> {diaRecogida}</p>
-        <p><span className='font-bold'>Hora de Devolución:</span> {horaRecogida}</p>
-      </div>
 
-      <div className=''> 
-                  
-                  <p className='font-bold  mb-2'>Detalles del Pago</p>
-                  
-                  <span className=''>Total:</span>
-                  <span className='font-bold'>{precioTotal.toFixed(2)}€</span>
+<div className='mb-4'>
+<p className='font-bold text-gray-700 uppercase'>Dirección de Facturación:</p>
+<p className='font-oswald'>{clientAdress}</p>
+</div>
 
-                
+<div className='mb-4'>
+<p className='font-bold text-gray-700 uppercase'>Teléfono:</p>
+<p className='font-oswald'>{clientPhone}</p>
+</div>
 
+<div className='mb-4'>
+<p className='font-bold text-gray-700 uppercase'>Correo Electrónico:</p>
+<p className='font-oswald'>{clientEmail}</p>
+</div>
 
-                
-                  </div>
-    </div>
+<div className='mb-4'>
+<p className='font-bold text-gray-700 uppercase'>Nombre de la Empresa:</p>
+<p className='font-oswald'>{ClientCompany}</p>
+</div>
+</div>
+</div>
+   
+        <h1 className='text-3xl font-oswald text-center pt-10'>Detalles de compra:</h1>
+                          
+                          <div className='grid grid-cols-2 gap-8'>
+<div>
+<p className='font-bold mb-2'>Detalles del Alquiler</p>
+<p><span className='font-bold'>Producto:</span> {car.model}</p>
+<p><span className='font-bold'>Lugar de Entrega:</span> {sucursalEntrega}</p>
+<p><span className='font-bold'>Día de Entrega:</span> {diadejada}</p>
+<p><span className='font-bold'>Hora de Entrega:</span> {horadejada}</p>
+</div>
+<div>
+<p className='font-bold mb-2'>Detalles de la Devolución</p>
+<p><span className='font-bold'>Sucursal de Devolución:</span> {sucursalRecogida}</p>
+<p><span className='font-bold'>Día de Devolución:</span> {diaRecogida}</p>
+<p><span className='font-bold'>Hora de Devolución:</span> {horaRecogida}</p>
+</div>
 
-           
+<div className=''> 
+          
+          <p className='font-bold  mb-2'>Detalles del Pago</p>
+          
+          <span className=''>Total:</span>
+          <span className='font-bold'>{precioTotal.toFixed(2)}€</span>
 
-                  
-             <div className='flex flex-col pt-10'>
-
-                <p><span className='font-bold'>Método de Pago:</span> Transferencia Bancaria Directa</p>
-                    <p>Realiza la transferencia a la siguiente cuenta:</p>
-                    <p>En <span className='font-bold'>12h </span>procesaremos su solicitud</p>
-                    <p className='font-bold border-b border-slate-950 text-center'>ES 05 2100 8077 3302 0002 8545</p>
-
-                    <Link to="/">   <button className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-2'   onClick={enviarCorreo}>Enviar Solictud</button> </Link> 
-                       
-                     <div className='flex justify-center items-center'>
-                   
-                        <h1 className='text-1xl'> Muchas Gracias por reservar con </h1>
-                        <img src={Logo} className='h-[10rem] w-[8rem] items-center' alt="" />
-                     </div> 
-
+        
 
 
-                     
-      {mostrarVentana && (
-        <div className="ventana-emergente">
-          <p>Tu solicitud está siendo procesada. Gracias por reservar.</p>
-        </div>
-      )}
-
-             </div>
-
-
-
-
+        
           </div>
-          
-          
-          
-          
-          
-          
-          
-          
-           </div>
+</div>
 
+   
+
+          
+     <div className='flex flex-col pt-10'>
+
+        <p><span className='font-bold'>Método de Pago:</span> Transferencia Bancaria Directa</p>
+            <p>Realiza la transferencia a la siguiente cuenta:</p>
+            <p>En <span className='font-bold'>12h </span>procesaremos su solicitud</p>
+            <p className='font-bold border-b border-slate-950 text-center'>ES 05 2100 8077 3302 0002 8545</p>
+
+            <Link to="/success">   <button className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-2'   onClick={enviarCorreo}>Enviar Solictud</button> </Link> 
+               
+             <div className='flex justify-center items-center'>
+           
+                <h1 className='text-1xl'> Muchas Gracias por reservar con </h1>
+                <img src={Logo} className='h-[10rem] w-[8rem] items-center' alt="" />
+             </div> 
+
+
+
+             
+{mostrarVentana && (
+<div className="ventana-emergente">
+  <p>Tu solicitud está siendo procesada. Gracias por reservar.</p>
+</div>
 )}
+
+     </div>
+
+
+
+
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  
+   </div>
+
+)} 
+
+                </div>
+
+      
    
         
           

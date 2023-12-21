@@ -20,6 +20,8 @@ import TuComponenteDePago from './Components/Shared/ComponenteDepago'
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import Succes from './routes/Succes'
+import Cancel from './routes/Cancel'
 
 
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
@@ -74,7 +76,9 @@ function App() {
       ))}  
       {/* <TuComponenteDePago/> */}
 
-     
+     <Route path='/success' element={<Succes/>}/>
+
+     <Route path='/cancel' element={<Cancel/>}/>
              
        
       {/* <Route path="/" element={<CarRental />}></Route>
