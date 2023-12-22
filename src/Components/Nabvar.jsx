@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import Logo from '../assets/Logo.png';
+import Logo from '../assets/Logo.png'; 
+import Rentcar from '../assets/rentcar.png'
 import LenguajeSelector from './Shared/LenguajeSelector'
 import { FiMenu, FiShoppingCart, FiPhone, FiMail, FiInstagram } from "react-icons/fi";
 import { BiLogoTiktok } from "react-icons/bi";
@@ -36,26 +37,30 @@ function Nabvar({cartProp}) {
 
   return (
     <div>
-        <nav className='bg-[#EC8F5E] p-0 fixed w-full'>
+        <nav className='bg-[#EC8F5E] p-2 box-content  fixed w-full'>
             <div className='container mx-auto flex justify-between items-center'> 
 
 
-            <img src={Logo} className='h-[100%] w-[40%] ' alt="" />
-            <div className='text-white text-lg font-bold box-content ml-0 '>
-                     
+           
+            <div className='text-white text-lg font-bold box-content flex ml-0'>
+            <img src={Rentcar} className='h-40 w-100%' alt="" />
 
-                          <h2></h2>
+            <button onClick={toggleMenu} className="text-white focus:outline-none">
 
-            </div>
-                                  
-                    <div className='flex flex-col items-left gap-4'>
-                      <div className='flex items-center gap-2'>
+              <div className=' right-10 bottom-20 absolute'>
+
+              <FiMenu className='text-white text-4xl mb-10 border'/>
+
+              </div>
+
+              <div className='flex flex-col mt-20 text-right gap-1 '>
+                      <div className='flex items-center gap-1'>
                       <FiPhone className='text-xl text-white'></FiPhone> <span className='text-[1rem] font-oswald text-white'> +34 695 94 10 16</span>
 
                       </div>
                      
-                      <div className='flex items-center gap-2'>
-                      <FiMail className='text-1xl text-white'></FiMail> <span className='text-[1rem] font-oswald text-white'>sevillarentacar@gmail.com</span>
+                      <div className='flex items-center gap-0'>
+                      <FiMail className='text-1xl text-white'></FiMail> <span className='text-[0.9rem] font-oswald text-white'>sevillarentacar@gmail.com</span>
                       </div>
 
 
@@ -71,6 +76,14 @@ function Nabvar({cartProp}) {
               
                 </div>  
                     </div>
+    
+
+</button>
+
+                     
+            </div>
+                                  
+                 
               
 
                 {/* <LenguajeSelector></LenguajeSelector> */}
@@ -81,15 +94,7 @@ function Nabvar({cartProp}) {
                 </button> */}
 
              
-                <button onClick={toggleMenu} className="text-white focus:outline-none">
-
-                    
-                <FiMenu className='text-white text-4xl' />
-
-                
-
-                </button>
-
+              
          
 
 

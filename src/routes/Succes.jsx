@@ -8,7 +8,7 @@ function Succes() {
 
 
                 <img src={checkValidate} alt="" className='h-20' />
-            <h1 className='text-[#f3b664] font-oswald text-3xl text-center'> Tu Solicitud se ha enviado Sastifactoriamente</h1>
+            <h1 className='text-[#f3b664] font-oswald text-3xl text-center'> Tu Solicitud se ha enviado correctamente</h1>
           
           
             <span className='text-white'>Tu coche va en camino...</span>

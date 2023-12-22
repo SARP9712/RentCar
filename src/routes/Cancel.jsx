@@ -8,7 +8,7 @@ function Cancel() {
 
 
                 <img src={cancelar} alt="" className='h-20' />
-            <h1 className='text-[#f3b664] font-oswald text-3xl text-center'> Lo sentimos algo ha salido </h1>
+            <h1 className='text-[#f3b664] font-oswald text-3xl text-center'> Lo sentimos algo ha salido mal </h1>
           
           
             <span className='text-white'>Volvamos intentarlo</span>

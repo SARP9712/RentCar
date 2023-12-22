@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const app = express();
+const redsysEasy = require('redsys-easy');
 app.use(express.static('dist'));
+
 
 app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
@@ -12,6 +14,67 @@ const transporter = nodemailer.createTransport({
     pass: 'codqwcvjwiyijwds',        // Reemplaza con tu contraseña
   },
 });
+
+
+  const redsys = {
+    merchantCode: '340711985',
+    terminal: '1',
+    currency: '978',
+    secretKey: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7',
+    encryptionType: 'SHA256',
+    // ...otros campos según tus necesidades
+  };
+
+
+  const reservaData = {
+    
+    
+    
+    // ...otros datos relevantes
+  };
+  
+
+  app.post('/redsys/generar-pago', (req, res) => {
+    // Obtener datos del frontend
+    try {
+      // Lógica de manejo de la solicitud aquí...
+      
+      // Generar formulario HTML y enviar al frontend
+      const formHtml = redsys.formHtml();
+  
+      // Enviar el formulario al frontend
+      res.status(200).send(formHtml);
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      res.status(500).send('Error interno del servidor');
+    }
+  });
+
+ 
+
+// Enviar el formulario al frontend
+
+
+app.post('/redsys/callback', (req, res) => {
+  const redsysResponse = req.body;
+  
+  // Validar la firma de Redsys y manejar la respuesta según sea necesario
+  if (redsys.checkResponseSignature(redsysResponse)) {
+    // La firma es válida, puedes procesar la respuesta
+    // ...
+    res.status(200).send('OK');
+  } else {
+    // La firma no es válida, manejar el error
+    res.status(400).send('Bad Request');
+  }
+
+  redsys.setMerchantData(JSON.stringify(reservaData));
+
+  const formHtml = redsys.formHtml();
+
+});
+
+
 
 
 

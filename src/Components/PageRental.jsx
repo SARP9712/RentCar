@@ -37,7 +37,7 @@ const [clientAdress, setClientAdress] = useState('');
 const [clientEmail, setClientEmail] = useState('');
 const [clientPhone, setClientPhone] = useState(''); 
 const [ClienteDni, setClienteDni] = useState('');
-
+const [redsysForm, setRedsysForm] = useState('');
 
 const [modalOpen, setModalOpen] = useState(false);
 
@@ -45,7 +45,8 @@ const [numPages, setNumPages] = useState(null);
 const [pageNumber, setPageNumber] = useState(1);
 
 
-
+const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+const fechasReservadas = ['2023-12-21', '2023-12-22', '2023-12-23']; // Agrega las fechas reservadas
 
 
 
@@ -103,6 +104,29 @@ const cambiarSeccion = (nuevaSeccion) => {
     setNumPages(numPages);
   }
 
+
+  
+  useEffect(() => {
+    // Fetch el formulario de Redsys desde tu servidor
+    fetch('/ruta-al-formulario-redsys')  // Reemplaza con la ruta correcta de tu servidor
+      .then(response => response.text())
+      .then(html => {
+        setRedsysForm(html);
+      })
+      .catch(error => {
+        console.error('Error al obtener el formulario de Redsys:', error);
+      });
+  }, []);  // Solo se ejecuta una vez al montar el componente
+
+  const handlePaymentSubmit = () => {
+    // Aquí puedes agregar lógica adicional si es necesario antes de enviar el formulario
+    // ...
+
+    // Envía el formulario de Redsys al servidor para procesar la transacción
+    // ...
+
+    // Después de enviar el formulario, Redsys redirigirá al usuario a la página de callback
+  };
 
 
 
@@ -365,12 +389,8 @@ const seccionRef2=useRef(null);
     const handleAlquilarClick = async (e) => {
       e.preventDefault();
   
-      
-      if (!sucursalRecogida || !sucursalEntrega || !diaRecogida || !horaRecogida || !diadejada || !horadejada) {
-        // Muestra un mensaje de error o realiza la acción que prefieras
-        console.error('Por favor, completa todos los campos obligatorios.');
-        return;
-      }
+
+  
 
     await calcularPrecio();
             
@@ -946,6 +966,13 @@ const seccionRef2=useRef(null);
               {/* <p>Realiza el pago con tu tarjeta de crédito o débito.</p> */}
 
               <div className=''>
+
+              <h1>Página de Pago</h1>
+                {/* Muestra el formulario de Redsys */}
+              <div dangerouslySetInnerHTML={{ __html: redsysForm }} />
+
+                 {/* Botón para enviar el formulario */}
+               <button onClick={handlePaymentSubmit}>Pagar</button>
 
                 Proximamente podre realizar pago con tarjeta, lamentamos las molestia.
               {/* <h2 className='font-oswald uppercase'>Precio Total:</h2>

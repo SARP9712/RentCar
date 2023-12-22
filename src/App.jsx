@@ -8,6 +8,7 @@ import { CarsData } from './Components/CarsData'
 import CarPage from './Components/Shared/Carpage'
 import PageRental from './Components/PageRental'
 import { loadStripe } from '@stripe/stripe-js';
+import Payment from './Components/Shared/payment'
 
 import Formulario from './Components/Shared/Formulario'
 import RedSysIntegration from './Components/Shared/RedSysIntegration'
@@ -79,6 +80,7 @@ function App() {
      <Route path='/success' element={<Succes/>}/>
 
      <Route path='/cancel' element={<Cancel/>}/>
+     <Route path='/Payment' element={<Payment/>}/>
              
        
       {/* <Route path="/" element={<CarRental />}></Route>
