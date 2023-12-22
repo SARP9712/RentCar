@@ -8,16 +8,6 @@ function Header() {
 
 
 
-  fetch('http://localhost/backend/index.php')
-  .then(response => response.text())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
-
-
-
-
-
     const [sucursalRecogida, setSucursalRecogida] = useState('');
     const [diaRecogida, setDiaRecogida] = useState('');
     const [horaRecogida, setHoraRecogida] = useState('');

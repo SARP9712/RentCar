@@ -53,13 +53,13 @@ function Nabvar({cartProp}) {
 
               </div>
 
-              <div className='flex flex-col mt-20 text-right gap-1 '>
-                      <div className='flex items-center gap-1'>
-                      <FiPhone className='text-xl text-white'></FiPhone> <span className='text-[1rem] font-oswald text-white'> +34 695 94 10 16</span>
+              <div className='flex flex-col justify-center items-start mt-20 gap-1 '>
+                      <div className='flex items-center gap-0'>
+                      <FiPhone className='text-xl text-white'></FiPhone> <span className='text-[1rem] font-oswald text-white text-right'> +34 695 94 10 16</span>
 
                       </div>
                      
-                      <div className='flex items-center gap-0'>
+                      <div className='flex items-center gap-0 '>
                       <FiMail className='text-1xl text-white'></FiMail> <span className='text-[0.9rem] font-oswald text-white'>sevillarentacar@gmail.com</span>
                       </div>
 
