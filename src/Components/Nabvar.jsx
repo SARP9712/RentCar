@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Logo from '../assets/Logo.png'; 
 import Rentcar from '../assets/rentcar.png'
 import LenguajeSelector from './Shared/LenguajeSelector'
@@ -30,10 +30,37 @@ function Nabvar({cartProp}) {
         setCart([...cart, car])
       }
 
+      const closeMenu = () => {
+        setMenuOpen(false);
+      };
+
+      const menuRef = useRef(null);
+
+      useEffect(() => {
+        const handleDocumentClick = (event) => {
+          // Cierra el menú si el clic no ocurrió dentro del menú ni del botón
+          if (
+            menuRef.current &&
+            !menuRef.current.contains(event.target) &&
+            event.target.tagName !== 'svg'
+          ) {
+            setMenuOpen(false);
+          }
+        };
+    
+        // Agregar el event listener al documento cuando el menú está abierto
+        if (menuOpen) {
+          document.addEventListener('click', handleDocumentClick);
+        }
+    
+        // Limpiar el event listener cuando el componente se desmonta o el menú se cierra
+        return () => {
+          document.removeEventListener('click', handleDocumentClick);
+        };
+      }, [menuOpen]);
 
 
-
- console.log(cart)
+ 
 
   return (
     <div>
@@ -53,7 +80,7 @@ function Nabvar({cartProp}) {
 
               </div>
 
-              <div className='flex flex-col justify-center items-start mt-20 gap-1 '>
+              <div className='flex flex-col justify-center items-end mt-20 gap-1 '>
                       <div className='flex items-center gap-0'>
                       <FiPhone className='text-xl text-white'></FiPhone> <span className='text-[1rem] font-oswald text-white text-right'> +34 695 94 10 16</span>
 
@@ -99,27 +126,60 @@ function Nabvar({cartProp}) {
 
 
                 {menuOpen ? (
-  <div className='mt-2 absolute right-0 h-screen w-60 top-[10.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+  <div ref={menuRef} className='mt-2 absolute right-0 h-screen w-60 top-[10.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4  transition-all ease-in-out pt-20'>
+    <Link to="/" onClick={closeMenu}>
 <a href="#" className="text-white text-3xl font-oswald block uppercase">Inicio</a>
+</Link>
                 
-                <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
-                <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
+<Link to="/Servicios" onClick={closeMenu}>
+     <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
+     </Link>  
+
+     <Link to="/Contactanos" onClick={closeMenu}>
+     <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
+     
+     </Link>
+                
+                <Link to='/QuienesSomos' onClick={closeMenu}>
                 <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Acerca de nosotros</a>
+                
+                </Link>
+
+                <Link to='/RutasSevilla' onClick={closeMenu}>
+                <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Rutas por Sevilla</a>
+                
+                </Link>
   
     
   
   </div>
 ) : (
-  <div className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
+  <div ref={menuRef} className='mt-2 absolute right-full h-screen w-60 top-[7.5rem] gap-8 bg-[#EC8F5E] items-center flex flex-col p-4'>
 
-    <Link to='/'>
+    <Link to='/' onClick={closeMenu}>
     <span className="text-white text-3xl font-oswald block uppercase">Inicio</span>
     </Link>
  
-                
-                <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
-                <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
+     <Link to="/Servicios" onClick={closeMenu}>
+     <a href="#" className="text-white  text-3xl font-oswald block uppercase">Servicios</a>
+     </Link>           
+           
+              
+     <Link to="/Contactanos" onClick={closeMenu}>
+     <a href="#" className="text-white   text-3xl font-oswald block uppercase">Contacto</a>
+     
+     </Link>
+               
+                <Link to='/QuienesSomos' onClick={closeMenu}>
                 <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Acerca de nosotros</a>
+                
+                </Link>
+
+                <Link to='/RutasSevilla' onClick={closeMenu}>
+                <a href="#" className="text-white   text-3xl text-center font-oswald block uppercase">Rutas por Sevilla</a>
+                
+                </Link>
+              
   </div>
 )}
 

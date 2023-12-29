@@ -43,6 +43,7 @@ function Header() {
     autoPlay
     loop
     muted
+    playsInline
   >
     <source src={Rentcar}/>
   </video>

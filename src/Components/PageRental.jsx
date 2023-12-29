@@ -88,6 +88,10 @@ const [completarReserva, setCompletarReserva] = useState(false);
 
 const [orderNumber, setOrderNumber] = useState(null);
 
+const [costoAdomicilioE, setCostoAdomicilioE]=useState(0);
+
+const [costoAdomicilioR, setCostoAdomicilioR]=useState(0);
+
 
 
 
@@ -104,80 +108,62 @@ const cambiarSeccion = (nuevaSeccion) => {
     setNumPages(numPages);
   }
 
-
+  const [formData, setFormData] = useState({
+    clientName: '',
+    clientEmail: '',
+    productName: car?.model,
+    productPrice: '100',
+    // Agrega otros campos según sea necesario
+  });
   
-  useEffect(() => {
-    // Fetch el formulario de Redsys desde tu servidor
-    fetch('/ruta-al-formulario-redsys')  // Reemplaza con la ruta correcta de tu servidor
-      .then(response => response.text())
-      .then(html => {
-        setRedsysForm(html);
-      })
-      .catch(error => {
-        console.error('Error al obtener el formulario de Redsys:', error);
-      });
-  }, []);  // Solo se ejecuta una vez al montar el componente
-
-  const handlePaymentSubmit = () => {
-    // Aquí puedes agregar lógica adicional si es necesario antes de enviar el formulario
-    // ...
-
-    // Envía el formulario de Redsys al servidor para procesar la transacción
-    // ...
-
-    // Después de enviar el formulario, Redsys redirigirá al usuario a la página de callback
-  };
 
 
 
 
 
 
-  const enviarSolicitud = () => {
-    // Aquí puedes realizar las acciones necesarias antes de mostrar la ventana emergente
-    // Por ejemplo, enviar datos al servidor
-
-    // Luego, muestra la ventana emergente
-    setMostrarVentana(true);
-
-    // También podrías redirigir al usuario al inicio después de un tiempo
-    setTimeout(() => {
-      setMostrarVentana(false);
-      // Aquí puedes redirigir al usuario al inicio usando react-router-dom u otras formas
-    }, 5000); // Redirigir después de 5 segundos (ajusta el tiempo según tus necesidades)
-  };
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+    };
 
 
-
-
-  const TerminosCondicionesModal = ({ onClose }) => {
-     return (
-      <ReactModal
-       isOpen={true} 
-       onRequestClose={onClose} 
-       className="fixed inset-0 flex items-center justify-center"
-      overlayClassName="fixed inset-0 bg-black opacity-50">
-        {/* Contenido de los términos y condiciones */}
-        <h2>Términos y Condiciones</h2>
-        <p>Aquí va tu contenido...</p>
+    const handlePayment = async () => {
+      try {
+        // Envia la información del formulario al servidor
+        const response = await fetch('/realizarPago', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
   
-        {/* Botón para cerrar el modal */}
-        <button onClick={onClose}>Cerrar</button>
-      </ReactModal>
-    );
-  };
+        // Si la solicitud es exitosa, redirige al usuario a la página de pago
+        if (response.ok) {
+          const paymentUrl = await response.text();
+          window.location.href = paymentUrl;
+        } else {
+          console.error('Error al iniciar el pago:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error al iniciar el pago:', error);
+      }
+    };
+  
 
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-  
-  
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
-  
-  
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
@@ -264,12 +250,28 @@ const cambiarSeccion = (nuevaSeccion) => {
     const [complementos, setComplementos] = useState({
       asientoElevador: { label: 'Asiento Elevador', precioPorDia: 2, isChecked: false },
       conductorJoven: { label: 'Conductor Joven', precioPorDia: 7, isChecked: false },
-      servicioFueraHoras: { label: 'Servicio Fuera de Horas', precioPorDia: 25, isChecked: false },
+    
       sillaBebe: { label: 'Silla Bebe', precioPorDia: 4, isChecked: false },
     });
 
 
+    const [complementosUnicos, setComplementosunicos ] = useState({
+      servicioFueraHoras: {label: 'Servicio Fuera de Hora', Precio: 25, isChecked:false}
+
+    })
+
     // Calcula la diferencia en días entre dos fechas
+
+  const handleCheckboxChangeUnic = (complementoUnico) => {
+    setComplementosunicos((prevComplementosUnic)=>({
+      ...prevComplementosUnic,
+      [complementoUnico]:{
+        ...prevComplementosUnic[complementoUnico],
+        isChecked: !prevComplementosUnic[complementoUnico].isChecked,
+      },
+    }))
+  }  
+
 
 
   const handleCheckboxChange = (complementoKey) => {
@@ -305,11 +307,18 @@ const cambiarSeccion = (nuevaSeccion) => {
       if (complemento.isChecked) {
           precioTotalComplementos += complemento.precioPorDia * diferenciaEnDias;
       }  
+
+      let precioComplementoUnico = 0;
+      Object.values(complementosUnicos).forEach((complementosUnicos)=>{
+        if (complementosUnicos.isChecked){
+            precioComplementoUnico += complementosUnicos.Precio;
+          }
+      })
      
-      const complementoTotal=precioTotalComplementos;
+      const complementoTotal=precioTotalComplementos + precioComplementoUnico + costoAdomicilioE + costoAdomicilioR;
 
        setComplementoTotal(complementoTotal)
-      const totaldeCosto = precioCochePorDia + precioTotalComplementos ;
+      const totaldeCosto = precioCochePorDia + precioTotalComplementos + precioComplementoUnico + costoAdomicilioE + costoAdomicilioR ;
       setTotaldeCosto(totaldeCosto );
       
       setPrecioTotal(precioCochePorDia);
@@ -317,24 +326,34 @@ const cambiarSeccion = (nuevaSeccion) => {
      });
 
 
+     
 
+     
 
 };
 
+const scrollIntoViewIfNeeded = () => {
+  if (mostrarFormularioCliente && seccionRef1.current) {
+    setMostrarFormularioCliente(true);
+    seccionRef1.current.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
     const handleReservaClick = async (e)=> {
-         
+     
      
       e.preventDefault();
-      setDatosReserva(reservaData);
-      if (seccionRef1.current) {
-        console.log('Antes del scrollIntoView');
-        seccionRef1.current.scrollIntoView({ behavior: 'smooth' });
-        await new Promise(resolve => setTimeout(resolve, 1000));  // Pausa de 1 segundo
-        console.log('Después del scrollIntoView');
-      }
+
+ 
+      await setMostrarFormularioCliente(true);
+      // setDatosReserva(reservaData);  
+     
+   scrollIntoViewIfNeeded();
+     
+   
 
      
-      setMostrarFormularioCliente(true);
+
   
       // await logDatos();
      
@@ -364,9 +383,9 @@ const cambiarSeccion = (nuevaSeccion) => {
     };
   
     // Resto del código...
-
-
-
+   
+    
+  
  // Limitacion de reservas 
 
  const [selectedCar, setSelectedCar] = useState('');
@@ -391,11 +410,12 @@ const seccionRef2=useRef(null);
   
 
   
-
+      await setMostrarFormularioCliente(true);
     await calcularPrecio();
             
       seccionRef.current.scrollIntoView({ behavior: 'smooth' });
-  
+
+      
     
   
     }
@@ -571,7 +591,21 @@ const seccionRef2=useRef(null);
         
          Lugar de Entrega
 
-         <select name="" id="localidadEntrega" required value={sucursalEntrega} onChange={(e) => setSucursalEntrega(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
+         <select name="" id="localidadEntrega" required value={sucursalEntrega} 
+         
+         
+         onChange={(e) => {setSucursalEntrega(e.target.value)
+          if (e.target.value === 'aDomicilio') {
+            setCostoAdomicilioE(25);
+          } else {
+            // Si selecciona otra opción, puedes establecer el costo a 0 o cualquier otro valor.
+            setCostoAdomicilioE(0);
+          }
+        }
+         
+        
+        
+        }  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
         >
             <option value="">Escoge un Sitio </option>
             <option value="aDomicilio"> A Domicilio </option>
@@ -585,7 +619,25 @@ const seccionRef2=useRef(null);
         
          Lugar de Recogida
 
-         <select name="" id="localidadRecogida"  value={sucursalRecogida} required onChange={(e) => setSucursalRecogida(e.target.value)}  className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
+         <select name="" id="localidadRecogida"  value={sucursalRecogida} required
+         
+         onChange={(e) => {setSucursalRecogida(e.target.value)
+          if (e.target.value === 'aDomicilio') {
+            setCostoAdomicilioR(25);
+          } else {
+            // Si selecciona otra opción, puedes establecer el costo a 0 o cualquier otro valor.
+            setCostoAdomicilioR(0);
+          }
+        }
+         
+        
+        
+        }  
+         
+         
+         
+         
+         className="bg-[#EC8F5E] text-white p-1 ml-4 border rounded-xl"
         >
             <option value="">Escoge un Sitio </option>
             <option value="aDomicilio"> A Domicilio </option>
@@ -652,10 +704,39 @@ const seccionRef2=useRef(null);
                 onChange={() => handleCheckboxChange(key)}
               
               />
+
+            
+
               <span className='uppercase font-oswald' >{complemento.label} (+{complemento.precioPorDia}€/día)</span>
+             
             </div>
-          ))}
-        </div>
+
+
+          ))} </div>
+            <label htmlFor=""></label>
+              {Object.entries(complementosUnicos).map(([key,complemento])=> (
+              <div key={key}>
+              <input
+                type="checkbox"
+                id={key}
+                checked={complemento.isChecked}
+                onChange={() => handleCheckboxChangeUnic(key)}
+
+                />
+            
+                <span className='uppercase font-oswald' >{complemento.label} (+{complemento.Precio}€)</span>
+
+                </div>
+           )) }
+          
+  
+
+
+        {sucursalEntrega === 'aDomicilio' && (
+            <div className='bg-[#EC8F5E] rounded-md p-2'>
+              <h1 className='text-white font-abc uppercase font-bold'>El Servicio a Domicilio tiene un costo de 20€</h1>
+            </div>
+          )}
 
 
            
@@ -668,7 +749,8 @@ const seccionRef2=useRef(null);
            font-oswald
             rounded-xl
             mt-2 
-            uppercase' onClick={handleAlquilarClick}> Calcular Presuspuesto</button>
+            uppercase' 
+            onClick={handleAlquilarClick}> Calcular Presuspuesto</button>
 
   
              
@@ -698,7 +780,10 @@ const seccionRef2=useRef(null);
 
       
   
-       <button  className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-10'  onClick={handleReservaClick}>REALIZAR RESERVA</button>   
+       <button 
+        className='bg-[#EC8F5E] w-full h-50 p-3 text-white font-oswald rounded-xl mt-10'
+          onClick={handleReservaClick}> 
+        REALIZAR RESERVA</button>   
          
        
 
@@ -709,8 +794,8 @@ const seccionRef2=useRef(null);
       )}
        
       
-        {message && 
-              <Message message={message} />}
+        {/* {message && 
+              <Message message={message} />} */}
 
       </form>
      
@@ -721,8 +806,8 @@ const seccionRef2=useRef(null);
 
       {mostrarFormularioCliente && (
         
-      <div >
-        <form className='flex flex-col items-left w-50 gap-5 pt-20   ' ref={seccionRef1} >
+      <div ref={seccionRef1} >
+        <form className='flex flex-col items-left w-50 gap-5 pt-20' >
           {/* Campos del formulario del cliente */}
 
           <h1   className="block text-gray-600 text-3xl font-oswald uppercase font-medium mb-2 text-center">Detalles de Facturacion</h1>
@@ -738,7 +823,7 @@ const seccionRef2=useRef(null);
             required
           /></label>
 
-          <label htmlFor="lastName"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Apellidos: <input required type="text" id='lasNamte' value={ClientLastName} onChange={(e)=>setClientLastName(e.target.value)} className='border rounded-md p-2 w-40'/></label>
+          <label htmlFor="lastName"  className="block text-gray-600 text-xl font-oswald uppercase font-medium mb-2">Apellidos: <input required type="text" id='lasNamte' value={ClientLastName} onChange={(e)=> setClientLastName(e.target.value)} className='border rounded-md p-2 w-40'/></label>
        
 
            
@@ -768,7 +853,7 @@ const seccionRef2=useRef(null);
               className='border rounded-md p-2 w-full'
             />
 
-<label htmlFor="clientAdress" className="block text-gray-600 text-xl font-oswald  font-medium mb-2">
+<label htmlFor="clientAdress" className="block text-gray-600 text-xl font-oswald  font-medium mb-2" ref={seccionRef1}>
              Direccion de la Calle*
             </label>
             <input
@@ -969,12 +1054,11 @@ const seccionRef2=useRef(null);
 
               <h1>Página de Pago</h1>
                 {/* Muestra el formulario de Redsys */}
-              <div dangerouslySetInnerHTML={{ __html: redsysForm }} />
-
+             
                  {/* Botón para enviar el formulario */}
-               <button onClick={handlePaymentSubmit}>Pagar</button>
+                 <button onClick={handlePayment}>Pagar</button>
 
-                Proximamente podre realizar pago con tarjeta, lamentamos las molestia.
+              
               {/* <h2 className='font-oswald uppercase'>Precio Total:</h2>
               <p className='font-bold'>{totaldeCosto.toFixed(2)}€</p> */}
              </div>

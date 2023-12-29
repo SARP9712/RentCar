@@ -23,6 +23,10 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import Succes from './routes/Succes'
 import Cancel from './routes/Cancel'
+import Services from './routes/Services'
+import Conctatanos from './routes/Conctatanos'
+import QuienesSomos from './routes/QuienesSomos'
+import RutasDsedeSevilla from './routes/RutasDsedeSevilla'
 
 
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
@@ -81,6 +85,10 @@ function App() {
 
      <Route path='/cancel' element={<Cancel/>}/>
      <Route path='/Payment' element={<Payment/>}/>
+     <Route path='/Servicios' element={<Services/>} />
+     <Route path='/Contactanos' element={<Conctatanos/>}/>
+     <Route path='/QuienesSomos' element={<QuienesSomos/>}/>
+     <Route path='/RutasSevilla' element={<RutasDsedeSevilla/>}/>
              
        
       {/* <Route path="/" element={<CarRental />}></Route>
